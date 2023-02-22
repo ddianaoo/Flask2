@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <h1>{{ title }}</h1>
+    <h1 class="mb-1">{{ article.title }}</h1>
+    <p>{{ article.date.strftime('%Y-%m-%d') }}</p>
+    <div class="alert alert-warning">
+        <p>{{ article.text }}</p>
+    </div>
+
+</div>
+
+{% endblock %}
+
+

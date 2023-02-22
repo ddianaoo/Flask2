@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from forms import AddArticle
 
-
 app = Flask(__name__)
 SECRET_KEY = 'juicy-pussy-money-money-pussy-juicy'
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -48,6 +47,17 @@ def add_article():
             print("Ошибка добавления в БД")
 
     return render_template('add-article.html', title='Create new article', form=form)
+
+
+@app.route('/articles/<int:id>')
+def get_article(id):
+    try:
+        article = Article.query.get(id)
+    except:
+        print("Ошибка получения  из БД")
+        return redirect('/articles')
+
+    return render_template('get_article.html', article=article)
 
 
 @app.route('/articles')
