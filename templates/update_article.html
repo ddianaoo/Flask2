@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container mt-5">
+    <h1>{{ title }}</h1>
+    <br>
+    <form method="post" action="">
+
+        {{ form.hidden_tag() }}
+        <p>{{ form.title.label() }} {{ form.title(value=article.title) }}</p>
+        <p>{{ form.intro.label() }} {{ form.intro(value=article.intro) }}</p>
+        <p>{{ form.text.label() }} {{ form.text() }}</p>
+        <p>{{ form.submit() }}</p>
+
+    </form>
+
+</div>
+{% endblock %}

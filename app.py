@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from forms import AddArticle
+from forms import AddArticle, UpdateArticle
 
 app = Flask(__name__)
 SECRET_KEY = 'juicy-pussy-money-money-pussy-juicy'
@@ -58,6 +58,39 @@ def get_article(id):
         return redirect('/articles')
 
     return render_template('get_article.html', article=article)
+
+
+@app.route('/articles/<int:id>/update', methods=["POST", "GET"])
+def update_article(id):
+    article = Article.query.get(id)
+
+    form = UpdateArticle()
+    if form.validate_on_submit():
+        try:
+            article.title = form.title.data
+            article.intro = form.intro.data
+            article.text = form.text.data
+
+            db.session.commit()
+            return redirect('/articles')
+        except:
+            db.session.rollback()
+            print("Ошибка обновления в БД")
+
+    return render_template('update_article.html', article=article, title='Update this article', form=form)
+
+
+@app.route('/articles/<int:id>/delete')
+def delete_article(id):
+    try:
+        article = Article.query.get_or_404(id)
+        db.session.delete(article)
+        db.session.flush()
+        db.session.commit()
+    except:
+        print("Ошибка удаления из БД")
+
+    return redirect('/articles')
 
 
 @app.route('/articles')

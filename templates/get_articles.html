@@ -2,8 +2,9 @@
 {% block body %}
 
 <div class="container mt-5">
-    <h1>{{ title }}</h1>
+    {% if  articles|length > 0 %}
 
+    <h1>{{ title }}</h1>
     {% for article in articles %}
     <div class="alert alert-warning">
         <a href="{{ url_for('get_article', id=article.id)}}" class="list-group-item list-group-item-action">
@@ -16,6 +17,11 @@
         </a>
     </div>
     {% endfor %}
+
+    {% else %}
+    <h3>You haven`t added any articles yet. <a class="me-3 py-2 text-decoration-none"
+                                              style="color:#B8860B;" href="/add-article">Correct it!</a></h3>
+    {% endif %}
 
 </div>
 
